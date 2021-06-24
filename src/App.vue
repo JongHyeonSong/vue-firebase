@@ -88,7 +88,6 @@ export default {
         .on(
           "value",
           (sn) => {
-            console.log("wefweewwfe", sn.val());
             const v = sn.val();
             if (!v) {
               this.$firebase.database().ref().child("site").set(this.site);

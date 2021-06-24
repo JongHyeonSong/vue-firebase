@@ -32,8 +32,6 @@ export default {
   data() {
     return { list: this.items };
   },
-  mounted() {
-    console.log(this.items);
-  },
+  mounted() {},
 };
 </script>
