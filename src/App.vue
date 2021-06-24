@@ -2,7 +2,7 @@
   <v-app>
     <v-app-bar app color="primary" dark>
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-      <site-title :title="title"></site-title>
+      <site-title :title="site.title"></site-title>
 
       <v-spacer></v-spacer>
       <v-btn icon @click="save">
@@ -24,13 +24,13 @@
       </v-list-item>
 
       <v-divider></v-divider>
-      <site-menu></site-menu>
+      <site-menu :items="site.menu"></site-menu>
     </v-navigation-drawer>
     <v-main>
       <router-view />
     </v-main>
 
-    <site-footer :footer="footer"></site-footer>
+    <site-footer :footer="site.footer"></site-footer>
   </v-app>
 </template>
 
@@ -44,15 +44,41 @@ export default {
   name: "App",
 
   data: () => ({
-    //
     drawer: true,
-    title: "ff",
-    footer: "ffii",
+
+    site: {
+      title: "ff",
+      footer: "ffii",
+      menu: [],
+    },
   }),
+  created() {
+    this.subscribe();
+  },
   mounted() {
     // console.log(this.$firebase);
   },
   methods: {
+    subscribe() {
+      this.$firebase
+        .database()
+        .ref()
+        .child("abcd")
+        .on(
+          "value",
+          (sn) => {
+            const v = sn.val();
+            if (!v) {
+              this.$firebase.database().ref().child("site").set(this.site);
+              return;
+            }
+            this.site = v;
+          },
+          (e) => {
+            console.log(e.message);
+          }
+        );
+    },
     save() {
       this.$firebase
         .database()

@@ -15,5 +15,8 @@
 <script>
 export default {
   props: ["footer"],
+  data() {
+    return {};
+  },
 };
 </script>
