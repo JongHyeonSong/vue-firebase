@@ -1,8 +1,8 @@
 <template>
   <v-list>
     <v-list-group
-      v-for="item in items"
-      :key="item.title"
+      v-for="(item, i) in list"
+      :key="i"
       v-model="item.active"
       :prepend-icon="item.action"
       no-action
@@ -28,30 +28,12 @@
 
 <script>
 export default {
-  props: ["footer"],
-  data: () => ({
-    items: [
-      {
-        action: "mdi-ticket",
-        subItems: [{ title: "List Item" }],
-        title: "Attractions",
-      },
-      {
-        action: "mdi-silverware-fork-knife",
-        active: true,
-        subItems: [
-          { title: "Breakfast & brunch", to: "/" },
-          { title: "New American", to: "/about" },
-          { title: "Sushi", to: "/" },
-        ],
-        title: "Dining",
-      },
-      {
-        action: "mdi-school",
-        subItems: [{ title: "List Item" }],
-        title: "Education",
-      },
-    ],
-  }),
+  props: ["items"],
+  data() {
+    return { list: this.items };
+  },
+  mounted() {
+    console.log(this.items);
+  },
 };
 </script>

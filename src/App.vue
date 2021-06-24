@@ -47,9 +47,30 @@ export default {
     drawer: true,
 
     site: {
+      menu: [
+        {
+          action: "mdi-ticket",
+          subItems: [{ title: "List Item" }],
+          title: "Attractions",
+        },
+        {
+          action: "mdi-silverware-fork-knife",
+          active: true,
+          subItems: [
+            { title: "Breakfast & brunch", to: "/" },
+            { title: "New American", to: "/about" },
+            { title: "Sushi", to: "/" },
+          ],
+          title: "Dining",
+        },
+        {
+          action: "mdi-school",
+          subItems: [{ title: "List Item" }],
+          title: "Education",
+        },
+      ],
       title: "ff",
       footer: "ffii",
-      menu: [],
     },
   }),
   created() {
@@ -63,10 +84,11 @@ export default {
       this.$firebase
         .database()
         .ref()
-        .child("abcd")
+        .child("site")
         .on(
           "value",
           (sn) => {
+            console.log("wefweewwfe", sn.val());
             const v = sn.val();
             if (!v) {
               this.$firebase.database().ref().child("site").set(this.site);
